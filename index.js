@@ -113,7 +113,7 @@ function Tunnel(px, o) {
   // 1. setup defaults
   px = px||'tunnel';
   o = o||{};
-  o.tunnel = o.tunnel||'localhost:7000';
+  o.tunnel = o.tunnel||`localhost:${o.port}`;
   o.keys = o.keys||{};
   o.keys['/'] = o.keys['/']||'';
   // 2. setup tunnel
@@ -497,8 +497,10 @@ if(require.main===module) {
     o.keys[chn] = E[k];
   }
   // 3. get options from args
+
   for(var i=2, I=A.length; i<I; i++) {
     if(!A[i].startsWith('-')) mode = A[i].toLowerCase();
+    else if(A[i]==='-p' || A[i]==='--port') o.port = A[++i];
     else if(A[i]==='-t' || A[i]==='--tunnel') o.tunnel = A[++i];
     else if(A[i]==='-s' || A[i]==='--server') o.server = A[++i];
     else if(A[i]==='-c' || A[i]==='--client') o.client = A[++i];
